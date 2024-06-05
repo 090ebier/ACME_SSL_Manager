@@ -17,16 +17,17 @@ PyFiglet: For printing ASCII banners.
 Installation
 Clone the repository:
 
+```
 git clone https://github.com/090ebier/ACME_SSL_Manager.git
 cd ACME_SSL_Manager
-
+```
 Install the required dependencies:
- ```bash
+
+ ```
 pip install -r requirements.txt
+```
 
-***
-
-Usage
 Run the script ACME_SSL_Manager.py:
-
+```
 python3 ACME_SSL_Manager.py
+```
