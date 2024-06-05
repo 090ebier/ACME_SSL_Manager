@@ -11,6 +11,7 @@ def print_banner():
     banner_text = 'ACME SSL Manager v1.0.0'
     banner = pyfiglet.Figlet(font='slant').renderText(banner_text)
     print(Fore.GREEN + Style.BRIGHT + banner + Style.RESET_ALL)
+    print(Fore.BLUE + "GitHub Repository: ( https://github.com/090ebier/ACME_SSL_Manager )" + Style.RESET_ALL)
 
 
 def run_command(command, description=None):
@@ -30,10 +31,10 @@ def run_command(command, description=None):
     return rc == 0
 
 def update_upgrade_server():
-    return run_command("apt update && apt upgrade -y", "Updating and upgrading the server...")
+    return run_command("sudo apt update ", "Updating and upgrading the server...")
 
 def install_packages():
-    return run_command("apt install curl socat -y", "Installing curl and socat...")
+    return run_command("sudo apt install curl socat -y", "Installing curl and socat...")
 
 def install_acme_script():
     return run_command("curl https://get.acme.sh | sh", "Installing Acme Script...")
@@ -151,16 +152,16 @@ def display_certificate_info(domain):
 def main():
     while True:
         print_banner()
-        print(Fore.BLUE + "Choose an option:")
-        print("1. Update and install Acme")
-        print("2. Decode SSL certificate")
-        print("3. Issue new SSL certificate")
-        print("4. Revoke SSL certificate")
-        print("5. Renew SSL certificate")
-        print("6. Issue wildcard SSL certificate for each domain separately")
-        print("7. Issue combined wildcard SSL certificate for multiple domains")
-        print("8. Exit")
-        choice = input("Enter your choice (1/2/3/4/5/6/7/8): ")
+        print(Fore.BLUE + " \nChoose an option:")
+        print("\n1. Update and install Acme")
+        print("\n2. Decode SSL certificate")
+        print("\n3. Issue new SSL certificate")
+        print("\n4. Revoke SSL certificate")
+        print("\n5. Renew SSL certificate")
+        print("\n6. Issue wildcard SSL certificate for each domain separately")
+        print("\n7. Issue combined wildcard SSL certificate for multiple domains")
+        print("\n8. Exit")
+        choice = input("\nEnter your choice (1/2/3/4/5/6/7/8): ")
 
         if choice == "1":
             if not update_upgrade_server():
