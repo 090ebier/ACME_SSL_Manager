@@ -68,4 +68,4 @@ python3 ACME_SSL_Manager.py
 
 ## Preview
 
-![Alt text](https://github.com/090ebier/ACME_SSL_Manager/blob/main/ACME_SSL_Manager_Sreenshot.png)
+![Alt text](https://github.com/090ebier/ACME_SSL_Manager/blob/main/ACME_SSL_Manager.png)
