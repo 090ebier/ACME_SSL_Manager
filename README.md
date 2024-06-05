@@ -52,7 +52,7 @@ Python 3.x
 Colorama: For colored terminal output.
 PyFiglet: For printing ASCII banners.
 
-Installation
+## Installation
 Clone the repository:
 
 ```
