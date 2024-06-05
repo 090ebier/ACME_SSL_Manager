@@ -3,12 +3,12 @@
 
 ACME SSL Manager is a Python script that provides a command-line interface for managing SSL certificates using the ACME protocol, particularly designed for Let's Encrypt. It simplifies the process of issuing, renewing, revoking, and installing SSL certificates for your domains.
 
+
 Features
 Simplified SSL Management: Easily issue, renew, revoke, and install SSL certificates for your domains.
 Wildcard Certificate Support: Issue wildcard SSL certificates for your domains with Cloudflare DNS integration.
 Informative: Provides detailed information about issued SSL certificates.
 User-Friendly Interface: Simple command-line interface to manage SSL certificates.
-![Alt text](https://github.com/090ebier/ACME_SSL_Manager/blob/main/ACME_SSL_Manager_Sreenshot.png)
 
 
 
@@ -41,11 +41,6 @@ Here are the options available in ACME SSL Manager and their descriptions:
    This option exits the program.
 
 
-
-
-
-
-
 Requirements
 Python 3.x
 Colorama: For colored terminal output.
@@ -71,3 +66,6 @@ Run the script ACME_SSL_Manager.py:
 python3 ACME_SSL_Manager.py
 ```
 
+## Preview
+
+![Alt text](https://github.com/090ebier/ACME_SSL_Manager/blob/main/ACME_SSL_Manager_Sreenshot.png)
