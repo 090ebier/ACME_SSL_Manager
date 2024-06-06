@@ -114,8 +114,7 @@ def issue_wildcard_certificate(domains, email, api_key):
     os.environ["CF_Key"] = api_key
     success = True
     for domain in domains:
-        command = f"~/.acme.sh/acme.sh --issue --force -d {
-            domain} -d '*.{domain}' --dns dns_cf"
+        command = f"~/.acme.sh/acme.sh --issue --force -d {domain} -d '*.{domain}' --dns dns_cf"
         if not run_command(command, f"Issuing wildcard SSL certificate for domain: {domain}..."):
             success = False
         wildcard_dir = f"/root/full-cert/{domain}"
@@ -298,8 +297,7 @@ def main():
             combined_domain = domains[0]
             domain_args = " ".join(
                 [f"-d {domain}" for domain in domains] + [f"-d '*.{domain}'" for domain in domains])
-            command = f"~/.acme.sh/acme.sh --issue --force {
-                domain_args} --dns dns_cf"
+            command = f"~/.acme.sh/acme.sh --issue --force {domain_args} --dns dns_cf"
             if run_command(command, f"Issuing combined wildcard SSL certificate for domains: {', '.join(domains)}..."):
                 wildcard_dir = f"/root/full-cert/{combined_domain}"
                 if create_directory(combined_domain):
