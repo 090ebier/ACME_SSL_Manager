@@ -43,26 +43,13 @@ Here are the options available in ACME SSL Manager and their descriptions:
 
 Requirements
 Python 3.x
-Colorama: For colored terminal output.
-PyFiglet: For printing ASCII banners.
 
 ## Installation
-Clone the repository:
+Clone the repository And Run the script ACME_SSL_Manager.py:
 
 ```
 git clone https://github.com/090ebier/ACME_SSL_Manager.git
 cd ACME_SSL_Manager
-```
-Install the required dependencies:
-
- ```
-pip install -r requirements.txt
-```
-
-
-
-Run the script ACME_SSL_Manager.py:
-```
 python3 ACME_SSL_Manager.py
 ```
 
