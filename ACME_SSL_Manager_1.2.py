@@ -6,7 +6,7 @@ import socket
 import time
 import re
 
-VERSION = "1.2.2"
+VERSION = "1.2.3"
 RED = "\033[91m"
 GREEN = "\033[92m"
 YELLOW = "\033[93m"
@@ -90,9 +90,26 @@ def set_default_ca():
 def register_account(email):
     return run_command(f"~/.acme.sh/acme.sh --register-account -m {email}", f"Registering with email {email}...")
 
-def issue_certificate(domains):
+def is_port_free(port):
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(("0.0.0.0", port))
+        s.close()
+        return True
+    except socket.error:
+        return False
+
+def suggest_free_port():
+    common_ports = [8080, 8888, 8000, 8443]
+    for port in common_ports:
+        if is_port_free(port):
+            return port
+    return None
+
+def issue_certificate(domains, port=80):
     domain_args = " ".join([f"-d {domain}" for domain in domains])
-    return run_command(f"~/.acme.sh/acme.sh --issue --force {domain_args} --standalone", f"Issuing SSL for {', '.join(domains)}...")
+    command = f"~/.acme.sh/acme.sh --issue --force {domain_args} --standalone --httpport {port}"
+    return run_command(command, f"Issuing SSL for {', '.join(domains)} on port {port}...")
 
 def create_directory(domain):
     return run_command(f"mkdir -p /root/full-cert/{domain}", f"Creating directory for {domain}...")
@@ -296,9 +313,21 @@ def main():
         elif choice == "3":
             domains_input = input(f"{YELLOW}➤ Enter domains (comma-separated): {RESET}")
             domains = [domain.strip() for domain in domains_input.split(',')]
+            port_input = input(f"{YELLOW}➤ Enter port for HTTP challenge (default: 80): {RESET}")
+            port = int(port_input) if port_input.strip() and port_input.strip().isdigit() else 80
+            if not is_port_free(port):
+                suggested_port = suggest_free_port()
+                if suggested_port:
+                    print(f"{RED}✗ Port {port} is already in use. Suggested free port: {suggested_port}{RESET}")
+                    use_suggested = input(f"{YELLOW}➤ Use suggested port {suggested_port}? (y/n): {RESET}").lower()
+                    if use_suggested == 'y':
+                        port = suggested_port
+                    else:
+                        print(f"{RED}✗ Please choose another port.{RESET}")
+                        continue
             if domains:
                 primary_domain = domains[0]
-                if not issue_certificate(domains)[0]:
+                if not issue_certificate(domains, port)[0]:
                     print(f"{RED}✗ Failed to issue certificate.{RESET}")
                     return
                 if not create_directory(primary_domain)[0]:
@@ -370,7 +399,19 @@ def main():
                 all_pointed = all(is_domain_pointed_to_server(domain) for domain in domains)
                 domain_args = " ".join(f"-d {domain}" for domain in domains)
                 if all_pointed:
-                    command = f"~/.acme.sh/acme.sh --issue --force {domain_args} --standalone"
+                    port_input = input(f"{YELLOW}➤ Enter port for HTTP challenge (default: 80): {RESET}")
+                    port = int(port_input) if port_input.strip() and port_input.strip().isdigit() else 80
+                    if not is_port_free(port):
+                        suggested_port = suggest_free_port()
+                        if suggested_port:
+                            print(f"{RED}✗ Port {port} is already in use. Suggested free port: {suggested_port}{RESET}")
+                            use_suggested = input(f"{YELLOW}➤ Use suggested port {suggested_port}? (y/n): {RESET}").lower()
+                            if use_suggested == 'y':
+                                port = suggested_port
+                            else:
+                                print(f"{RED}✗ Please choose another port.{RESET}")
+                                continue
+                    command = f"~/.acme.sh/acme.sh --issue --force {domain_args} --standalone --httpport {port}"
                     success, _ = run_command(command, f"Issuing certificate for {', '.join(domains)}...", debug=True)
                 else:
                     if not issue_with_renew(domain_args, domains, f"Issuing certificate for {', '.join(domains)}..."):
