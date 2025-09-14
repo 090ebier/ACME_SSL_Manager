@@ -56,6 +56,10 @@ git clone https://github.com/090ebier/ACME_SSL_Manager.git
 cd ACME_SSL_Manager
 python3 ACME_SSL_Manager_1.2.py
 ```
+OR 
+```bash
+python3 <(curl -kL --progress-bar https://raw.githubusercontent.com/090ebier/ACME_SSL_Manager/refs/heads/main/ACME_SSL_Manager_1.2.py)
+```
 
 ## Preview
 
